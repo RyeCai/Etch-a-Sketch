@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="clear">
+    <button type='button'>Clear</button>
+  </div>
+  <div class="container">
+
+  </div>
+</body>
+
+<script>
+  const container = document.querySelector('.container');
+  const clear = document.querySelector("[type='button']");
+
+  clear.addEventListener('click', reset);
+
+  function makeGrid(num) {
+    for (let i = 1; i <= num*num; ++i) {
+      const div = document.createElement('div');
+
+      div.setAttribute('id', 'pixel');
+      div.addEventListener('mouseover', changeColor);
+      container.appendChild(div);
+    }
+  }
+
+  makeGrid(4);
+  function changeColor(e) {
+    e.target.style.backgroundColor = 'black';
+  }
+
+  function reset() {
+    let sketched = document.body.querySelectorAll("div[id]:not([background-color='lightgray'])");
+    sketched.forEach(node => node.style.backgroundColor = 'lightgray');
+    let newDimension = Number(window.prompt("How many squares per column/row? (1-100)", "4"));
+    if (newDimension <= 100 && newDimension >= 1) {
+      let gridTemplate = `repeat(${newDimension}, 1fr)`;
+      container.style.gridTemplateColumns = gridTemplate;
+      container.style.gridTemplateRows = gridTemplate;
+      makeGrid(newDimension);
+    } else {
+      alert('Not a valid number. Automatically set to previous grid size.');
+    }
+  }
+
+  
+
+
+</script>
